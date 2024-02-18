@@ -1,0 +1,10 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55vh;
+  }
+
+.no-wrap {
+    flex-wrap: nowrap !important;
+}

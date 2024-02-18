@@ -1,49 +1,77 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
-
-// top_rated / popular
-// make an array of movies by using 2 req one toprated and the other one popular
 function Cast() { 
-    const apiKey = process.env.REACT_APP_API_KEY;
-    const baseURL = "https://api.themoviedb.org/3/movie/";
-
-    async function fetchMovies() {
-    try {
-        const responseTopRated = await axios.get(`${baseURL}top_rated`, {
-            params: {
-                api_key: apiKey,
-                language: "en-US",
-                page: Math.floor(Math.random() * 50 ) + 1
-            }
-        });
-
-        const responsePopular = await axios.get(`${baseURL}popular`, {
-            params: {
-                api_key: apiKey,
-                language: "en-US",
-                page: Math.floor(Math.random() * 50 ) + 1
-            }
-        });
-        const data = [responseTopRated.data.results,responsePopular.data.results];        
-
-        data[0].map(movie =>{
-            console.log(movie.title)
-        });
-    } catch (error) {
-        console.error('Error fetching data:', error);
+    const [movie, setMovie] = useState([]);
+    const [castOfMovie, setCastOfMovie] = useState([]);
+    function constructActorPosterURL(profilePath, posterSize) {
+        const baseURLProfile = "https://image.tmdb.org/t/p/";
+        return `${baseURLProfile}${posterSize}${profilePath}`;
     }
 
-    }
-    fetchMovies();
-    // Call fetchData function when needed
-        
+
+    useEffect(() => {
+        async function fetchMovies() {
+            try {
+                const apiKey = process.env.REACT_APP_API_KEY;
+                const baseURL = "https://api.themoviedb.org/3/movie/";
+
+                const responseTopRated = await axios.get(`${baseURL}top_rated`, {
+                    params: {
+                        api_key: apiKey,
+                        language: "en-US",
+                        page: Math.floor(Math.random() * 50 ) + 1
+                    }
+                });
+
+                const responsePopular = await axios.get(`${baseURL}popular`, {
+                    params: {
+                        api_key: apiKey,
+                        language: "en-US",
+                        page: Math.floor(Math.random() * 30 ) + 1
+                    }
+                });
+
+            
+                
+
+                const filteredTopRated = responseTopRated.data.results.filter(movie => { return movie.original_language === "en" && !movie.genre_ids.includes(16)});
+                const filteredPopular = responsePopular.data.results.filter(movie => { return movie.original_language === "en" && !movie.genre_ids.includes(16)});
+                const allMovies = filteredTopRated.concat(filteredPopular);
+                const randomIndex = Math.floor(Math.random() * allMovies.length);
+                const selectedMovie = allMovies[randomIndex];
+                const randomMovieID = allMovies[randomIndex].id;
+                
+                const responseFetchMovieDetails = await axios.get(`${baseURL}${randomMovieID}/credits`, {
+                    params: { api_key: apiKey }
+                });
+                
+                setCastOfMovie(responseFetchMovieDetails.data.cast);
+                setMovie(selectedMovie);
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchMovies();
+    }, []);
 
     return (
-        <div className='container'>
-            hello
+<div className="container center-container">
+        <div className="row no-wrap">
+            {movie.title}
+            {castOfMovie.slice(0, 4).map((actor, key) => (
+                <div key={key} className="col-md-3">
+                    <img 
+                        src={constructActorPosterURL(actor.profile_path, "original")} 
+                        className="img-fluid"
+                    />
+                </div>
+            ))}
         </div>
-        )
+    </div>
+    );
+}
 
-    }
 export default Cast;
