@@ -16,3 +16,18 @@
   height: 200px;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-sm {
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+
+.btn-submit{
+  position: relative;
+  left: 500px;
+  bottom: 42px;
+  margin: auto;
+}

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Cast() { 
-    const [movie, setMovie] = useState([]);
+function Cast({movie,setMovie}) { 
     const [castOfMovie, setCastOfMovie] = useState([]);
     function constructActorPosterURL(profilePath, posterSize) {
         const baseURLProfile = "https://image.tmdb.org/t/p/";
@@ -31,10 +30,6 @@ function Cast() {
                         page: Math.floor(Math.random() * 30 ) + 1
                     }
                 });
-
-            
-                
-
                 const filteredTopRated = responseTopRated.data.results.filter(movie => { return movie.original_language === "en" && !movie.genre_ids.includes(16)});
                 const filteredPopular = responsePopular.data.results.filter(movie => { return movie.original_language === "en" && !movie.genre_ids.includes(16)});
                 const allMovies = filteredTopRated.concat(filteredPopular);
