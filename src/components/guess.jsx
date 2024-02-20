@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Correct from './correct';
+import Wrong from './wrong';
 import axios from 'axios';
 
 let numOfGuesses = 0;
@@ -6,10 +8,12 @@ let numOfGuesses = 0;
 function Guess({movie,setMovie}) {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [isCorrect, setIsCorrcted] = useState(false);
+    const [isCorrect, setIsCorrct] = useState(false);
     const [isWrong, setIsWrong] = useState(false);
     const [isDone, setIsDone] = useState(false);
-
+    const [movieUser, setMovieUser] = useState(0);
+    const [guessedMovies, setGuessedMovies] = useState([]);
+    const randomMovieID = movie.id;
     
 
     const fetchQueryUser = async (query) =>{
@@ -36,29 +40,39 @@ function Guess({movie,setMovie}) {
         }
     }
     const handleInputChange = async (event) => {
-        setQuery(event.target.value)
+        setQuery(event.target.value);
         await fetchQueryUser(event.target.value);
     }
     const handleSelectedMovie = async (movie) => {
         setQuery(`${movie.title} - ${movie.release_date.substring(0,4)}`);
+        setMovieUser(movie);
         setSuggestions([]);
     }
-    const handleSubmit = () =>{
-        const movieTitle = query.substring(0, query.indexOf('-')).trim();
-        setQuery('');
-        numOfGuesses++;
-        
-        if(movieTitle === movie.title){
-            setIsCorrcted(true);
-            setIsDone(true);
-            numOfGuesses = 0;
+
+    /*
+        randomMovieID == the correct movie id
+        ---------------------------------------
+        movieUserID == the user chosen movie id
+        ---------------------------------------
+    */
+        const handleSubmit = () => {
+            numOfGuesses++;
+            if (query === "" && numOfGuesses < 5) {
+                setGuessedMovies([...guessedMovies, "Skipped"]);
+            } else {
+                setGuessedMovies([...guessedMovies, movieUser]);
+                if (randomMovieID === movieUser.id) {
+                    setIsCorrct(true);
+                    setIsDone(true);
+                    numOfGuesses = 0;
+                } else if (numOfGuesses >= 5 && randomMovieID !== movieUser.id) {
+                    setIsWrong(true);
+                    setIsDone(true);
+                    numOfGuesses = 0;
+                }
+                setQuery(''); 
+            }
         }
-        else if(numOfGuesses >= 5){
-            setIsWrong(true);
-            setIsDone(true);
-            numOfGuesses = 0;
-        }        
-    }
 
 
     return(
@@ -73,27 +87,23 @@ function Guess({movie,setMovie}) {
                     <ul>
                         {suggestions.map(movie => (
                         <li key={movie.id} onClick={() => handleSelectedMovie(movie)}>
-                        {movie.title} - {movie.release_date.substring(0,4)}
+                            {movie.title} - {movie.release_date.substring(0,4)}
                         </li>
                         ))}
                     </ul>
                 </div>
-                
                 {isCorrect && (
-                    <div className='correct-message rounded-pill'>
-                        <p> Correct! The movie is: <br></br> {movie.title} </p>
-                    </div>
+                    <Correct movie={movie} />
                 )}
                 {isWrong && (
-                    <div className='wrong-message rounded-pill'>
-                    <p> Sorry you were out of guesses... The movie is: <br></br>  {movie.title} </p>
-                    </div>
+                    <Wrong movie={movie} guessedMovies={guessedMovies}/>
                 )}
+                
             </div>
         </form>
     )
-  }
+  
 
 
-
+}
 export default Guess;
