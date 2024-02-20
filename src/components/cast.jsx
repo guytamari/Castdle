@@ -30,8 +30,18 @@ function Cast({movie,setMovie}) {
                         page: Math.floor(Math.random() * 30 ) + 1
                     }
                 });
-                const filteredTopRated = responseTopRated.data.results.filter(movie => { return movie.original_language === "en" && !movie.genre_ids.includes(16)});
-                const filteredPopular = responsePopular.data.results.filter(movie => { return movie.original_language === "en" && !movie.genre_ids.includes(16)});
+
+                // filtering results:
+                const filteredTopRated = responseTopRated.data.results.filter(movie => {
+                    return movie.original_language === "en" && 
+                           !movie.genre_ids.includes(16) &&
+                           new Date(movie.release_date).getFullYear() >= 1998;
+                });
+                const filteredPopular = responsePopular.data.results.filter(movie => {
+                    return movie.original_language === "en" && 
+                           !movie.genre_ids.includes(16) &&
+                           new Date(movie.release_date).getFullYear() >= 1998;
+                });
                 const allMovies = filteredTopRated.concat(filteredPopular);
                 const randomIndex = Math.floor(Math.random() * allMovies.length);
                 const selectedMovie = allMovies[randomIndex];

@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-
+let numOfGuesses = 0;
 
 function Guess({movie,setMovie}) {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+    const [isCorrect, setIsCorrcted] = useState(false);
+    const [isWrong, setIsWrong] = useState(false);
+    const [isDone, setIsDone] = useState(false);
+
+    
 
     const fetchQueryUser = async (query) =>{
         try{
@@ -40,21 +45,31 @@ function Guess({movie,setMovie}) {
     }
     const handleSubmit = () =>{
         const movieTitle = query.substring(0, query.indexOf('-')).trim();
-        console.log(movieTitle);
-        console.log(movie);
-        // if(movieTitle === movie){
-
-        // }
-         
+        setQuery('');
+        numOfGuesses++;
+        
+        if(movieTitle === movie.title){
+            setIsCorrcted(true);
+            setIsDone(true);
+            numOfGuesses = 0;
+        }
+        else if(numOfGuesses >= 5){
+            setIsWrong(true);
+            setIsDone(true);
+            numOfGuesses = 0;
+        }        
     }
 
 
     return(
         <form className='form-guess m-100'>
             <div>
-                <div className="form-floating flex-grow-1 me-2">
+                <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
                     <input type="text" value={query} onChange={handleInputChange} className="form-control" id="floatingInput" placeholder="Think you know that movie is this? (press skip if you have no idea)" />
                     <label htmlFor="floatingInput">Think you know that movie is this? (press skip if you have no idea)</label>
+                    <button className="btn btn-primary btn-lg font-semibold text-sm btn-submit" type="button" onClick={handleSubmit}>
+                        Submit
+                    </button>
                     <ul>
                         {suggestions.map(movie => (
                         <li key={movie.id} onClick={() => handleSelectedMovie(movie)}>
@@ -63,9 +78,17 @@ function Guess({movie,setMovie}) {
                         ))}
                     </ul>
                 </div>
-                <button className="btn btn-primary btn-lg font-semibold text-sm btn-submit" type="button" onClick={handleSubmit}>
-                    Submit
-                </button>
+                
+                {isCorrect && (
+                    <div className='correct-message rounded-pill'>
+                        <p> Correct! The movie is: <br></br> {movie.title} </p>
+                    </div>
+                )}
+                {isWrong && (
+                    <div className='wrong-message rounded-pill'>
+                    <p> Sorry you were out of guesses... The movie is: <br></br>  {movie.title} </p>
+                    </div>
+                )}
             </div>
         </form>
     )

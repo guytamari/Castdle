@@ -31,3 +31,31 @@
   bottom: 42px;
   margin: auto;
 }
+
+.wrong-message {
+  background-color: #000000; /* Background color */
+  color: #cf1515; /* Text color */
+  border: 1px solid #c3e6cb; /* Border color */
+  padding: 10px; /* Padding around the content */
+  border-radius: 5px; /* Rounded corners */
+}
+.wrong-message p {
+  color: #d41212; /* Text color */
+  padding: 10px; /* Padding around the content */
+  border-radius: 5px; /* Rounded corners */
+  font-size: large;
+}
+
+.correct-message {
+  background-color: #000000; /* Background color */
+  color: #155724; /* Text color */
+  border: 1px solid #c3e6cb; /* Border color */
+  padding: 10px; /* Padding around the content */
+  border-radius: 5px; /* Rounded corners */
+}
+.correct-message p {
+  color: #16be3e; /* Text color */
+  padding: 10px; /* Padding around the content */
+  border-radius: 5px; /* Rounded corners */
+  font-size: large;
+}
