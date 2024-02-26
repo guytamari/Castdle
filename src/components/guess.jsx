@@ -80,20 +80,24 @@ function Guess({movie,setMovie}) {
             <div>
                 <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
                     <input type="text" value={query} onChange={handleInputChange} className="form-control" id="floatingInput" placeholder="Think you know that movie is this? (press skip if you have no idea)" />
-                    <label htmlFor="floatingInput">Think you know that movie is this? (press skip if you have no idea)</label>
+                    <label htmlFor="floatingInput">Think you know what movie this is? (press submit if you have no idea)</label>
                     <button className="btn btn-primary btn-lg font-semibold text-sm btn-submit" type="button" onClick={handleSubmit}>
                         Submit
                     </button>
-                    <ul>
+                    <ul className="list-group">
                         {suggestions.map(movie => (
-                        <li key={movie.id} onClick={() => handleSelectedMovie(movie)}>
-                            {movie.title} - {movie.release_date.substring(0,4)}
-                        </li>
+                            <li 
+                                key={movie.id} 
+                                className="list-group-item list-group-item-action" 
+                                onClick={() => handleSelectedMovie(movie)}
+                            >
+                                {movie.title} - {movie.release_date.substring(0,4)}
+                            </li>
                         ))}
                     </ul>
                 </div>
                 {isCorrect && (
-                    <Correct movie={movie} />
+                    <Correct movie={movie} guessedMovies={guessedMovies} />
                 )}
                 {isWrong && (
                     <Wrong movie={movie} guessedMovies={guessedMovies}/>

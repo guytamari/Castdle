@@ -1,3 +1,5 @@
+
+
 .center-container {
     display: flex;
     justify-content: center;
@@ -31,6 +33,11 @@
   bottom: 42px;
   margin: auto;
 }
+.list-group{
+  max-height: "300px";
+  overflow-y: "auto"
+
+}
 
 .wrong-message {
   background-color: #000000; /* Background color */
@@ -45,6 +52,9 @@
   border-radius: 5px; /* Rounded corners */
   font-size: large;
 }
+.wrong-message li {
+  font-size: large;
+}
 
 .correct-message {
   background-color: #000000; /* Background color */
@@ -57,5 +67,9 @@
   color: #16be3e; /* Text color */
   padding: 10px; /* Padding around the content */
   border-radius: 5px; /* Rounded corners */
+  font-size: large;
+}
+
+.correct-message li {
   font-size: large;
 }

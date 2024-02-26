@@ -64,27 +64,39 @@ function Cast({movie,setMovie}) {
 
         fetchMovies();
     }, []);
-    function getActorsDetails (cast,numberOfActors) {
-        return cast.slice(0, numberOfActors);
-      };
+    // get actor image and idetify if it has any
+    function getActorsDetails(castOfMovie, numberOfActors) {
+        const actorsWithProfilePath = castOfMovie.filter(actor => actor.profile_path);
+        const actorsToDisplay = [];
+    
+        let count = 0;
+        for (let i = 0; i < actorsWithProfilePath.length; i++) {
+            if (count === numberOfActors) break;
+            actorsToDisplay.push(actorsWithProfilePath[i]);
+            count++;
+        }
+    
+        return actorsToDisplay;
+    }
 
 
     return (
 <div className="container center-container">
-        <div className="row no-wrap">
-            {movie.title}
-            {getActorsDetails(castOfMovie, 4).map(actor=>(
-                actor.profile_path ? (
+    <div className="row justify-content-center">
+        {movie.title}
+        {getActorsDetails(castOfMovie, 4).map(actor => (
+            <div key={actor.id} className="col-6 col-md-3 text-center">
+                {actor.profile_path ? (
                     <img 
-                    key={actor.id}
-                    src={fetchingActorPosterURL(actor.profile_path, "original")} 
-                    className="img-fluid"
-                />
+                        src={fetchingActorPosterURL(actor.profile_path, "original")} 
+                        className="img-fluid"
+                    />
                 ) : (
                     <p>no poster available</p>
-                )
-            ))}
-        </div>
+                )}
+            </div>
+        ))}
+    </div>
 </div>
     );
 }
