@@ -14,10 +14,11 @@ function App() {
         <Cast movie={movie} setMovie={setMovie} />
         <Guess movie={movie} setMovie={setMovie} />
       </div>
-      <div>
-        Footer Here !
-      </div>
-
+      <footer>
+        <div>
+          Footer Here !
+        </div>
+      </footer>
     </div>
     
   );

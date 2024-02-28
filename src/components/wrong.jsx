@@ -2,10 +2,6 @@
 
 function Wrong({ movie, guessedMovies }) {
     return(
-        <div className='wrong-message'>
-            <p> Sorry you were out of guesses... The Movie is: <br />  {movie.title} </p>
-            <p> Your guesses were: </p>
-
         <ul class="list-group" style={{paddingRight: "40px"}}>
             <ol type="1">
                 {guessedMovies.map((guessedMovie, index) => (
@@ -16,9 +12,8 @@ function Wrong({ movie, guessedMovies }) {
                     )
                 ))}
             </ol>
-        </ul>
-    </div>
-    );
+        </ul>    );
   }
 
 export default Wrong;
+

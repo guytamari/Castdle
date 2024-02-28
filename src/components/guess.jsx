@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Correct from './correct';
-import Wrong from './wrong';
+import GuessesList from './guessesList';
 import axios from 'axios';
 
 let numOfGuesses = 0;
@@ -8,7 +7,7 @@ let numOfGuesses = 0;
 function Guess({movie,setMovie}) {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [isCorrect, setIsCorrct] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
     const [isWrong, setIsWrong] = useState(false);
     const [isDone, setIsDone] = useState(false);
     const [movieUser, setMovieUser] = useState(0);
@@ -57,26 +56,29 @@ function Guess({movie,setMovie}) {
     */
         const handleSubmit = () => {
             numOfGuesses++;
+            
             if (query === "" && numOfGuesses < 5) {
                 setGuessedMovies([...guessedMovies, "Skipped"]);
             } else {
                 setGuessedMovies([...guessedMovies, movieUser]);
+        
                 if (randomMovieID === movieUser.id) {
-                    setIsCorrct(true);
-                    setIsDone(true);
-                    numOfGuesses = 0;
+                    setIsCorrect(true);
                 } else if (numOfGuesses >= 5 && randomMovieID !== movieUser.id) {
                     setIsWrong(true);
-                    setIsDone(true);
-                    numOfGuesses = 0;
                 }
+        
                 setQuery(''); 
             }
-        }
-
+            
+            if (randomMovieID === movieUser.id || numOfGuesses >= 5) {
+                setIsDone(true);
+                numOfGuesses = 0;
+            }
+        } 
 
     return(
-        <form className='form-guess m-100'>
+        <form autoComplete='off' className='form-guess m-100'>
             <div>
                 <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
                     <input type="text" value={query} onChange={handleInputChange} className="form-control" id="floatingInput" placeholder="Think you know that movie is this? (press skip if you have no idea)" />
@@ -97,10 +99,18 @@ function Guess({movie,setMovie}) {
                     </ul>
                 </div>
                 {isCorrect && (
-                    <Correct movie={movie} guessedMovies={guessedMovies} />
+                    <div className='correct-message'>
+                        <p> Correct! The Movie is: <br></br> {movie.title} </p>
+                        <p> Your guesses were: </p>
+                        <GuessesList movie={movie} guessedMovies={guessedMovies} />
+                    </div>
                 )}
                 {isWrong && (
-                    <Wrong movie={movie} guessedMovies={guessedMovies}/>
+                    <div className='wrong-message'>
+                        <p> Sorry you were out of guesses... The Movie is: <br />  {movie.title} </p>
+                        <p> Your guesses were: </p>
+                        <GuessesList movie={movie} guessedMovies={guessedMovies}/>
+                    </div>
                 )}
                 
             </div>
