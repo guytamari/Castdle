@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import GuessesList from './guessesList';
 import axios from 'axios';
 
-let numOfGuesses = 0;
 
 function Guess({movie,setMovie}) {
     const [query, setQuery] = useState('');
@@ -12,6 +11,7 @@ function Guess({movie,setMovie}) {
     const [isDone, setIsDone] = useState(false);
     const [movieUser, setMovieUser] = useState(0);
     const [guessedMovies, setGuessedMovies] = useState([]);
+    const [numOfGuesses,setNumOfGuesses] = useState(1);
     const randomMovieID = movie.id;
     
 
@@ -54,30 +54,34 @@ function Guess({movie,setMovie}) {
         movieUserID == the user chosen movie id
         ---------------------------------------
     */
+
         const handleSubmit = () => {
-            numOfGuesses++;
-            
+            setNumOfGuesses(numOfGuesses + 1);
+        
+            // Check if the user guessed correctly or used up all guesses
             if (query === "" && numOfGuesses < 5) {
+                // User chose to skip
                 setGuessedMovies([...guessedMovies, "Skipped"]);
             } else {
-                setGuessedMovies([...guessedMovies, movieUser]);
+                // User made a guess
+                setGuessedMovies([...guessedMovies, query !== "" ? movieUser : "Skipped"]);
         
-                if (randomMovieID === movieUser.id) {
-                    setIsCorrect(true);
-                } else if (numOfGuesses >= 5 && randomMovieID !== movieUser.id) {
-                    setIsWrong(true);
+                // Check if the guess is correct or if all guesses are used up
+                if (randomMovieID === movieUser.id && numOfGuesses <= 4) {
+                    setIsCorrect(true); // Correct guess
+                    setIsDone(true); // Game ends
+                    setNumOfGuesses(0); // Reset the number of guesses
+                } else if (numOfGuesses >= 4 && randomMovieID !== movieUser.id) {
+                    setIsWrong(true); //no guesses left without a correct guess
+                    setIsDone(true);
                 }
+            }
         
-                setQuery(''); 
-            }
-            
-            if (randomMovieID === movieUser.id || numOfGuesses >= 5) {
-                setIsDone(true);
-                numOfGuesses = 0;
-            }
-        } 
-
-    return(
+            // Reset the query for the next guess
+            setQuery('');
+        }
+        
+    return (
         <form autoComplete='off' className='form-guess m-100'>
             <div>
                 <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
@@ -88,36 +92,26 @@ function Guess({movie,setMovie}) {
                     </button>
                     <ul className="list-group">
                         {suggestions.map(movie => (
-                            <li 
-                                key={movie.id} 
-                                className="list-group-item list-group-item-action" 
+                            <li
+                                key={movie.id}
+                                className="list-group-item list-group-item-action"
                                 onClick={() => handleSelectedMovie(movie)}
                             >
-                                {movie.title} - {movie.release_date.substring(0,4)}
+                                {movie.title} - {movie.release_date.substring(0, 4)}
                             </li>
                         ))}
                     </ul>
                 </div>
-                {isCorrect && (
-                    <div className='correct-message'>
-                        <p> Correct! The Movie is: <br></br> {movie.title} </p>
+                {(isCorrect || isWrong) && (
+                    <div className={isCorrect ? 'correct-message' : 'wrong-message'}>
+                        <p>{isCorrect ? 'Correct!' : 'Sorry you were out of guesses...'} The Movie is: <br /> {movie.title}</p>
                         <p> Your guesses were: </p>
-                        <GuessesList movie={movie} guessedMovies={guessedMovies} />
+                        <GuessesList guessedMovies={guessedMovies} />
                     </div>
                 )}
-                {isWrong && (
-                    <div className='wrong-message'>
-                        <p> Sorry you were out of guesses... The Movie is: <br />  {movie.title} </p>
-                        <p> Your guesses were: </p>
-                        <GuessesList movie={movie} guessedMovies={guessedMovies}/>
-                    </div>
-                )}
-                
             </div>
         </form>
-    )
-  
-
-
+    );
 }
+
 export default Guess;

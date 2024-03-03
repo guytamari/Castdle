@@ -1,0 +1,15 @@
+.logo {
+    height: 123px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo .group {
+    height: 123px;
+    position: relative;
+    top: 0;
+    width: 122px;
+  }
+  

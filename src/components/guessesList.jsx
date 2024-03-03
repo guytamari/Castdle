@@ -2,10 +2,10 @@
 
 function GuessesList({ movie, guessedMovies }) {
     return(
-        <ul className="list-group" style={{paddingRight: "40px"}}>
+        <ul className="list-group" style={{paddingRight: "40px", marginBottom: "20px"}}>
             <ol type="1">
                 {guessedMovies.map((guessedMovie, index) => (
-                    guessedMovie === "Skipped" ? (
+                    (guessedMovie === "Skipped") ? (
                     <li className="list-group-item" key={index}>Skipped</li>
                     ) : (
                     <li className="list-group-item" key={index}>{guessedMovie.title}</li>

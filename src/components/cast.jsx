@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { gettingMovies, movieDetails, fetchingActorPosterURL } from './api';
+import Box from "./component-style/actorBox"
 
 const ANIMETED_MOVIES = 16;
 const POSTER_SIZE = "w185";
 
 function Cast({movie,setMovie}) { 
     const [castOfMovie, setCastOfMovie] = useState([]);
-    const [numberOfActors, setNumberOfActors] = useState(4);
+    const [numberOfActors, setNumberOfActors] = useState(5);
         useEffect(() => {
             async function fetchAndFilterMovies() {
                 try {
@@ -65,8 +65,9 @@ function Cast({movie,setMovie}) {
         <div className="container center-container">
             <div className="row justify-content-center">
                 {movie.title}
-                {getActorsDetails(castOfMovie, 4).map(actor => (
+                {getActorsDetails(castOfMovie, numberOfActors).map(actor => (
                     <div key={actor.id} className="col-6 col-md-3 text-center">
+                    <Box>
                         {actor.profile_path ? (
                             <img 
                                 src={fetchingActorPosterURL(actor.profile_path, POSTER_SIZE)} 
@@ -75,9 +76,11 @@ function Cast({movie,setMovie}) {
                         ) : (
                             <p>no poster available</p>
                         )}
+                    </Box>
                     </div>
                 ))}
             </div>
+            
         </div>
     );
 }

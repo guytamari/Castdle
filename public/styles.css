@@ -2,6 +2,7 @@
 .actor{
   background-size: cover;
   border: 2px grey;
+  border-radius: 25px;
 
 }
 .center-container {
@@ -77,3 +78,4 @@
 .correct-message li {
   font-size: large;
 }
+
