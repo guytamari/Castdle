@@ -1,9 +1,16 @@
 
+/* .gardient-background{
+  background-image: linear-gradient(to right top, #9394a7, #9497b3, #939bbf, #919ecb, #8ea2d7, #829de0, #7699e8, #6794f1, #5284f7, #4172fa, #375efc, #3a47fa);
+  height: 100vh;
+} */
 .actor{
   background-size: cover;
   border: 2px grey;
   border-radius: 25px;
 
+}
+.guesses-history{
+  padding-top: 50px;
 }
 .center-container {
     display: flex;
@@ -22,6 +29,11 @@
   margin: auto;
   height: 200px;
 }
+.font{
+  font-family: "Madimi One", sans-serif!important;
+  font-weight: 200!important;
+  font-style: normal;
+}
 
 .font-semibold {
   font-weight: 600;
@@ -32,12 +44,7 @@
   line-height: 1.25rem;
 }
 
-.btn-submit{
-  position: relative;
-  left: 500px;
-  bottom: 42px;
-  margin: auto;
-}
+
 .list-group{
   max-height: "300px";
   overflow-y: "auto"

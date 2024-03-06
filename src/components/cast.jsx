@@ -8,27 +8,22 @@ const POSTER_SIZE = "w185";
 function Cast({movie,setMovie}) { 
     const [castOfMovie, setCastOfMovie] = useState([]);
     const [numberOfActors, setNumberOfActors] = useState(5);
+    // Filtering the movies
+    const filterMovies = (movies) => {
+        return movies.filter(movie => (
+            movie.original_language === "en" &&
+            !movie.genre_ids.includes(ANIMETED_MOVIES) &&
+            new Date(movie.release_date).getFullYear() >= 1998
+        ));
+    };
         useEffect(() => {
             async function fetchAndFilterMovies() {
                 try {
                     const responseTopRated = await gettingMovies("top_rated", 50);
                     const responsePopular = await gettingMovies("popular", 30);
-    
                     if (responseTopRated && responsePopular) {
-                        const filteredTopRated = responseTopRated.results.filter(movie => {
-                            return (
-                                movie.original_language === "en" &&
-                                !movie.genre_ids.includes(ANIMETED_MOVIES) &&
-                                new Date(movie.release_date).getFullYear() >= 1998
-                            );
-                        });
-                        const filteredPopular = responsePopular.results.filter(movie => {
-                            return (
-                                movie.original_language === "en" &&
-                                !movie.genre_ids.includes(ANIMETED_MOVIES) &&
-                                new Date(movie.release_date).getFullYear() >= 1998
-                            );
-                        });
+                        const filteredTopRated = filterMovies(responseTopRated.results);
+                        const filteredPopular = filterMovies(responsePopular.results);
                         const allMovies = filteredTopRated.concat(filteredPopular);
                         const randomIndex = Math.floor(Math.random() * allMovies.length);
                         const selectedMovie = allMovies[randomIndex];
@@ -64,9 +59,8 @@ function Cast({movie,setMovie}) {
     return (
         <div className="container center-container">
             <div className="row justify-content-center">
-                {movie.title}
                 {getActorsDetails(castOfMovie, numberOfActors).map(actor => (
-                    <div key={actor.id} className="col-6 col-md-3 text-center">
+                    <div key={actor.id} className="col-12 col-md-4 text-center">
                     <Box>
                         {actor.profile_path ? (
                             <img 
