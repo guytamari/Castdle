@@ -7,7 +7,7 @@ const POSTER_SIZE = "w185";
 
 function Cast({movie,setMovie}) { 
     const [castOfMovie, setCastOfMovie] = useState([]);
-    const [numberOfActors, setNumberOfActors] = useState(5);
+    const [numberOfActors] = useState(5);
     // Filtering the movies
     const filterMovies = (movies) => {
         return movies.filter(movie => (
@@ -16,6 +16,7 @@ function Cast({movie,setMovie}) {
             new Date(movie.release_date).getFullYear() >= 1998
         ));
     };
+        
         useEffect(() => {
             async function fetchAndFilterMovies() {
                 try {
@@ -37,7 +38,7 @@ function Cast({movie,setMovie}) {
                 }
             }
             fetchAndFilterMovies();
-        }, []); 
+        }, [setMovie]); 
 
     // get actor image and idetify if it has any
     function getActorsDetails(castOfMovie, numberOfActors) {
@@ -66,6 +67,7 @@ function Cast({movie,setMovie}) {
                             <img 
                                 src={fetchingActorPosterURL(actor.profile_path, POSTER_SIZE)} 
                                 className="img-fluid actor"
+                                alt=''
                             />
                         ) : (
                             <p>no poster available</p>
