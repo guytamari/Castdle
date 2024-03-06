@@ -47,7 +47,10 @@
 
 .list-group{
   max-height: "300px";
-  overflow-y: "auto"
+  overflow-y: "auto";
+  font-family: "Madimi One", sans-serif!important;
+  font-weight: 200!important;
+  font-style: normal!important;
 
 }
 

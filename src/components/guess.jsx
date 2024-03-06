@@ -127,7 +127,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                         </div>
                     )}
                     {(isCorrect || isWrong) && (
-                        <div className={isCorrect ? 'correct-message' : 'wrong-message'}>
+                        <div className={`font ${isCorrect ? 'correct-message' : 'wrong-message'}`}>
                             <p>{isCorrect ? 'Correct!' : 'Sorry you were out of guesses...'} The Movie is: <br /> <span style={{backgroundColor:"green", color:"white"}}>{movie.title}</span></p>
                             <p> Your guesses were: </p>
                             <GuessesList guessedMovies={guessedMovies} />
