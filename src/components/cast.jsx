@@ -58,10 +58,10 @@ function Cast({movie,setMovie}) {
 
     
     return (
-        <div className="container center-container">
+        <div className="center-container">
             <div className="row justify-content-center">
                 {getActorsDetails(castOfMovie, numberOfActors).map(actor => (
-                    <div key={actor.id} className="col-12 col-md-4 text-center">
+                    <div key={actor.id} className="col-12 col-sm-6 col-md-4 col-lg-3 text-center">
                     <Box>
                         {actor.profile_path ? (
                             <img 

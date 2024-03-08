@@ -33,7 +33,7 @@ function App() {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div style={{ background: gradient, height: "100vh" }}>
+    <div style={{ background: gradient, height: "100%" }}>
       <header className='text-center p-2'>
         <Header numOfGuesses={numOfGuesses}/>
       </header>

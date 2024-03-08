@@ -4,7 +4,7 @@ import "./box.css";
 const Box = ({ children }) => {
   return (
     <div className="box">
-      <div className="rectangle">
+      <div>
         {children}
       </div>
     </div>

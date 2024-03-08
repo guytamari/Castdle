@@ -6,25 +6,45 @@
   border-radius: 25px;
 
 }
+/* .actor {
+  border-radius: 25%;
+  overflow: hidden; /* Ensure the image stays within the circular shape */
+/* }  */
+
+
+/* Media query for small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .actor img {
+    width: 100%; /* Ensure the image fills the entire circular container */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
 .guesses-history{
   padding-top: 50px;
 }
+  /* 
 .center-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 55vh;
-  }
+  } */
 
 .no-wrap {
     flex-wrap: nowrap !important;
 }
-
+/* 
 .form-guess {
   max-width: 500px;
   padding: 1rem;
   margin: auto;
   height: 200px;
+} */
+.form-guess {
+  max-width: 500px;
+  padding: 1rem;
+  margin: 20px auto 0; /* Added margin-top to push the form below the images */
+  height: auto; /* Removed fixed height */
 }
 .font{
   font-family: "Madimi One", sans-serif!important;
