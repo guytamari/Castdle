@@ -1,8 +1,5 @@
 
-/* .gardient-background{
-  background-image: linear-gradient(to right top, #9394a7, #9497b3, #939bbf, #919ecb, #8ea2d7, #829de0, #7699e8, #6794f1, #5284f7, #4172fa, #375efc, #3a47fa);
-  height: 100vh;
-} */
+
 .actor{
   background-size: cover;
   border: 2px grey;
@@ -89,3 +86,18 @@
   font-size: large;
 }
 
+@media (max-width: 768px) {
+  .center-container {
+    height: auto;
+  }
+
+  .form-guess {
+    max-width: 90%;
+    height: auto;
+  }
+
+  .list-group {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
