@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Cast from './cast';
 import Guess from './guess';
 import Header from "./header";
