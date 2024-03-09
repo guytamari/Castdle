@@ -1,4 +1,10 @@
-
+body {
+  background: linear-gradient(to right,#4d69d7,#62f0f5);
+ height: 100%;
+ margin: 0;
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+}
 
 .actor{
   background-size: cover;

@@ -32,8 +32,9 @@ function App() {
     // Clear the interval on component unmount to prevent memory leaks
     return () => clearInterval(interval);
   }, []);
+  // style={{ background: gradient, height: "100%" }}
   return (
-    <div style={{ background: gradient, height: "100%" }}>
+    <div>
       <header className='text-center p-2'>
         <Header numOfGuesses={numOfGuesses}/>
       </header>
