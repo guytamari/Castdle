@@ -81,14 +81,16 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
             // Reset the query for the next guess
             setQuery('');
         }
+       
         
         return (
             <form autoComplete='off' className='form-guess m-100'>
+                <p className='font' style={{color:"darkslategrey", textAlign:"center", fontSize:"14px"}}>GUESSES LEFT: {numOfGuesses}</p>
                 <div>
                     <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
                         <div className='row align-items-center'>
                             <div className="col">
-
+                                
                                 <input
                                     type="text"
                                     value={query}

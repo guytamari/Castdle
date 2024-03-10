@@ -8,9 +8,6 @@ function Header({ numOfGuesses }) {
                     <div className="col">
                         <Logo />
                     </div>
-                    <div className="col">
-                        <span className="fw-bold" style={{backgroundColor: "antiquewhite"}}>{numOfGuesses} Guesses Left</span>
-                    </div>
                 </div>
             </div>
         </div>

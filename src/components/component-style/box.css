@@ -1,28 +1,28 @@
-.box {
-  width: 100%; /* Make the box container span the entire width */
-  max-width: 292px; /* Limit the maximum width to 292px */
-  height: auto; /* Allow height to adjust based on content */
+/* .box {
+  width: 100%; 
+  max-width: 292px; 
+  height: auto; 
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Center the images horizontally */
-}
+  justify-content: center; 
+} */
 
-.box .rectangle {
-  margin: 10px; /* Add margin between images */
+/* .box .rectangle {
+  margin: 10px;
   background-color: #ffffff;
   border: 9px solid;
   border-color: #7ea6d6;
   border-radius: 25px;
   box-shadow: 0px 4px 25px 15px #00000099;
-  width: calc(33.33% - 20px); /* Adjust width based on the number of columns */
-  max-width: 292px; /* Limit the maximum width of the rectangle */
+  width: calc(33.33% - 20px); 
+  max-width: 292px; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the content vertically */
-}
+  align-items: center;
+} */
 
-.box img {
-  max-width: 100%; /* Ensure the image fills the width of its container */
-  max-height: 100%; /* Ensure the image doesn't exceed the height of its container */
-  height: auto; /* Allow the image to scale proportionally based on width */
-}
+/* .box img {
+  max-width: 100%;
+  max-height: 100%; 
+  height: auto; 
+} */

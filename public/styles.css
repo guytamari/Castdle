@@ -1,3 +1,6 @@
+/* General Styling */
+/* ------------------- */
+
 body {
   background: linear-gradient(to right,#4d69d7,#62f0f5);
  height: 100%;
@@ -5,68 +8,71 @@ body {
  background-repeat: no-repeat;
  background-attachment: fixed;
 }
-
-.actor{
-  background-size: cover;
-  border: 2px grey;
-  border-radius: 25px;
-
-}
-/* .actor {
-  border-radius: 25%;
-  overflow: hidden; /* Ensure the image stays within the circular shape */
-/* }  */
-
-
-/* Media query for small devices (landscape phones, 576px and up) */
-@media (max-width: 576px) {
-  .actor img {
-    width: 100%; /* Ensure the image fills the entire circular container */
-    height: auto; /* Maintain aspect ratio */
-  }
-}
-.guesses-history{
-  padding-top: 50px;
-}
-  /* 
-.center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 55vh;
-  } */
-
 .no-wrap {
-    flex-wrap: nowrap !important;
+  flex-wrap: nowrap !important;
 }
-/* 
+
 .form-guess {
-  max-width: 500px;
-  padding: 1rem;
-  margin: auto;
-  height: 200px;
-} */
-.form-guess {
-  max-width: 500px;
-  padding: 1rem;
-  margin: 20px auto 0; /* Added margin-top to push the form below the images */
-  height: auto; /* Removed fixed height */
+max-width: 500px;
+padding: 1rem;
+margin: 20px auto 0; 
+height: auto; 
 }
 .font{
-  font-family: "Madimi One", sans-serif!important;
-  font-weight: 200!important;
-  font-style: normal;
+font-family: "Madimi One", sans-serif!important;
+font-weight: 200!important;
+font-style: normal;
 }
 
 .font-semibold {
-  font-weight: 600;
+font-weight: 600;
 }
 
 .text-sm {
-  font-size: .875rem;
-  line-height: 1.25rem;
+font-size: .875rem;
+line-height: 1.25rem;
 }
 
+
+/*  Cast Style */
+/* ------------------- */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: auto;
+  gap: 60px;
+  width: 400px;
+  margin-left:auto ;
+  margin-right: auto;
+  justify-content: center;
+
+}
+.gridItem {
+  border: 1px solid gray;
+  border-radius: 25%;
+  padding: 10px;
+  text-align: center;
+}
+
+.castName{
+  font-family: "Madimi One", sans-serif!important;
+  font-weight: 200!important;
+  font-size: 15px;
+  font-style: normal;
+}
+
+
+
+
+
+
+
+
+
+
+/*  Guess Style */
+/* ------------------- */
 
 .list-group{
   max-height: "300px";
@@ -75,6 +81,10 @@ body {
   font-weight: 200!important;
   font-style: normal!important;
 
+}
+
+.guesses-history{
+  padding-top: 50px;
 }
 
 .wrong-message {
@@ -112,18 +122,3 @@ body {
   font-size: large;
 }
 
-@media (max-width: 768px) {
-  .center-container {
-    height: auto;
-  }
-
-  .form-guess {
-    max-width: 90%;
-    height: auto;
-  }
-
-  .list-group {
-    max-height: 200px;
-    overflow-y: auto;
-  }
-}

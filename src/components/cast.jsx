@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { gettingMovies, movieDetails, fetchingActorPosterURL } from './api';
-import Box from "./component-style/actorBox"
 
 const ANIMETED_MOVIES = 16;
 const POSTER_SIZE = "w185";
 
-function Cast({movie,setMovie}) { 
+function Cast({movie,setMovie, numOfGuesses, setNumOfGuesses}) { 
     const [castOfMovie, setCastOfMovie] = useState([]);
-    const [numberOfActors] = useState(5);
+    const [numberOfActors] = useState(4);
     // Filtering the movies
     const filterMovies = (movies) => {
         return movies.filter(movie => (
@@ -58,25 +57,32 @@ function Cast({movie,setMovie}) {
 
     
     return (
-        <div className="center-container">
-            <div className="row justify-content-center">
-                {getActorsDetails(castOfMovie, numberOfActors).map(actor => (
-                    <div key={actor.id} className="col-12 col-sm-6 col-md-4 col-lg-3 text-center">
-                    <Box>
-                        {actor.profile_path ? (
-                            <img 
-                                src={fetchingActorPosterURL(actor.profile_path, POSTER_SIZE)} 
-                                className="img-fluid actor"
-                                alt=''
-                            />
-                        ) : (
-                            <p>no poster available</p>
-                        )}
-                    </Box>
-                    </div>
-                ))}
-            </div>
-            
+        <div className='gridContainer'>
+            {getActorsDetails(castOfMovie, numberOfActors).map(actor => (
+                <div className='castName' key={actor.id}>
+                    {actor.profile_path ? (
+                        <img 
+                            src={fetchingActorPosterURL(actor.profile_path, POSTER_SIZE)} 
+                            className="gridItem"
+                            alt=''
+                        />
+                    ) : (
+                        <p>no poster available</p>
+                    )}
+                    {numOfGuesses <= 4 ? (
+                        <p>{actor.name}</p>
+                    ):(
+                        null
+                    )}
+                    {numOfGuesses <= 3 ? (
+                        <p style={{fontSize:"12px"}}>{actor.character}</p>
+                    ):(
+                        null
+                    )}
+                
+                </div>
+            ))}
+
         </div>
     );
 }
