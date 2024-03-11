@@ -2,7 +2,8 @@
 /* ------------------- */
 
 body {
-  background: linear-gradient(to right,#4d69d7,#62f0f5);
+  background: rgb(42,42,43);
+  background: linear-gradient(90deg, rgba(42,42,43,1) 0%, rgba(86,88,88,1) 97%);
  height: 100%;
  margin: 0;
  background-repeat: no-repeat;
@@ -22,6 +23,7 @@ height: auto;
 font-family: "Madimi One", sans-serif!important;
 font-weight: 200!important;
 font-style: normal;
+
 }
 
 .font-semibold {
@@ -60,19 +62,87 @@ line-height: 1.25rem;
   font-weight: 200!important;
   font-size: 15px;
   font-style: normal;
+  color: ghostwhite;
 }
 
+@media screen and (max-width: 688px){
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    height: auto;
+    gap: 2px;
+    width: 100px;
+    margin-left:auto ;
+    margin-right: auto;
+    justify-content: center;
+  
+  }
+  .gridItem {
+    border: 1px solid gray;
+    border-radius: 25%;
+    padding: 10px;
+    text-align: center;
+    width: 100px;
+  }
 
+}
+@media screen and (max-width: 500px){
+  .gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: auto;
+    gap: 2px;
+    width: 100px;
+    margin-left:auto ;
+    margin-right: auto;
+    justify-content: center;
+  
+  }
+  .gridItem {
+    border: 1px solid gray;
+    border-radius: 25%;
+    padding: 10px;
+    text-align: center;
+    width: 100px;
+  }
+  .wrong-message {
+    background-color: #000000; /* Background color */
+    color: #cf1515; /* Text color */
+    border: 1px solid #c3e6cb; /* Border color */
+    padding: 10px; /* Padding around the content */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-flex;
+  }
+  .correct-message {
+    background-color: #000000; /* Background color */
+    color: #155724; /* Text color */
+    border: 1px solid #c3e6cb; /* Border color */
+    padding: 10px; /* Padding around the content */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-flex;
+  }
 
-
-
-
-
-
+}
 
 
 /*  Guess Style */
 /* ------------------- */
+
+
+.form-buttons{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: auto;
+  gap: 10px;
+  width: 100%;
+  margin-left:auto ;
+  margin-right: auto;
+  justify-content: center;
+
+}
 
 .list-group{
   max-height: "300px";

@@ -11,6 +11,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
     const [isCorrect, setIsCorrect] = useState(false);
     const [isWrong, setIsWrong] = useState(false);
     const [isDone, setIsDone] = useState(false);
+    const [isSkipped, setIsSkipped] = useState(false);
     const [movieUser, setMovieUser] = useState(0);
     const [guessedMovies, setGuessedMovies] = useState([]);
     const randomMovieID = movie.id;
@@ -81,26 +82,32 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
             // Reset the query for the next guess
             setQuery('');
         }
+
+        function refreshPage(){
+            window.location.reload();
+        } 
+        const showAnwser = () =>{
+            setIsSkipped(true);
+        }
        
         
         return (
             <form autoComplete='off' className='form-guess m-100'>
-                <p className='font' style={{color:"darkslategrey", textAlign:"center", fontSize:"14px"}}>GUESSES LEFT: {numOfGuesses}</p>
+                <p className='font' style={{ color: "ghostwhite", textAlign:"center", fontSize:"14px"}}>GUESSES LEFT: {numOfGuesses}</p>
                 <div>
                     <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
-                        <div className='row align-items-center'>
-                            <div className="col">
+                        
+                            <div className="form-buttons">
                                 
                                 <input
                                     type="text"
                                     value={query}
                                     onChange={handleInputChange}
                                     className="form-control font"
-                                    id="floatingInput"
+                                    id="floatingInput form-buttons"
                                     placeholder="Think you know that movie is this? (press skip if you have no idea)"
                                 />
-                            </div>
-                            <div className="col-auto">
+                            
                                 <button
                                     className="btn btn-primary btn-lg font text-sm btn-submit"
                                     type="button"
@@ -108,8 +115,23 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                                 >
                                     Submit
                                 </button>
+                           
+                                <button
+                                    className="btn btn-primary btn-lg font text-sm btn-submit"
+                                    type="button"
+                                    onClick={refreshPage}
+                                >
+                                    Shuffle
+                                </button>
+                          
+                                <button
+                                    className="btn btn-primary btn-lg font text-sm btn-submit"
+                                    type="button"
+                                    onClick={showAnwser}
+                                >
+                                    Show Anwser
+                                </button>
                             </div>
-                        </div>
                         <ul className="list-group">
                             {suggestions.map(movie => (
                                 <li
@@ -136,6 +158,11 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                         </div>
                     )}
                     {isCorrect && <Confetti />}
+                    {isSkipped && (
+                        <div className={`font ${isCorrect ? 'correct-message' : 'wrong-message'}`}>
+                        <p>The Movie is: <br /> <span style={{backgroundColor:"green", color:"white"}}>{movie.title}</span></p>
+                        </div>
+                    )}
                 </div>
             </form>
         );
