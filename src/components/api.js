@@ -11,7 +11,9 @@ const apiKey = process.env.REACT_APP_API_KEY;
 export function fetchingActorPosterURL(profilePath, posterSize) {
     return `${baseURLProfile}${posterSize}${profilePath}`;
 }
-
+export function fetchingMoviePoster(posterPath, posterSize) {    
+    return `${baseURLProfile}${posterSize}${posterPath}`;
+}
 
 
 

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import GuessesList from './guessesList';
 import axios from 'axios';
 import Confetti from 'react-confetti';
-
-
+import ShowAnwser from './showanwser';
 function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
     
     const [query, setQuery] = useState('');
@@ -95,7 +94,14 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
             <form autoComplete='off' className='form-guess m-100'>
                 <p className='font' style={{ color: "ghostwhite", textAlign:"center", fontSize:"14px"}}>GUESSES LEFT: {numOfGuesses}</p>
                 <div>
-                    <div className={`form-floating flex-grow-1 me-2 ${isDone ? 'hidden' : ''}`}>
+                    <button
+                        className="btn btn-primary btn-lg font text-sm btn-submit"
+                        type="button"
+                        onClick={refreshPage}
+                    >
+                        Shuffle
+                    </button>
+                    <div className={`form-floating flex-grow-1 me-2 ${isDone || isSkipped ? 'hidden' : ''}`}>
                         
                             <div className="form-buttons">
                                 
@@ -116,13 +122,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                                     Submit
                                 </button>
                            
-                                <button
-                                    className="btn btn-primary btn-lg font text-sm btn-submit"
-                                    type="button"
-                                    onClick={refreshPage}
-                                >
-                                    Shuffle
-                                </button>
+                                
                           
                                 <button
                                     className="btn btn-primary btn-lg font text-sm btn-submit"
@@ -151,17 +151,15 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                         </div>
                     )}
                     {(isCorrect || isWrong) && (
-                        <div className={`font ${isCorrect ? 'correct-message' : 'wrong-message'}`}>
-                            <p>{isCorrect ? 'Correct!' : 'Sorry you were out of guesses...'} The Movie is: <br /> <span style={{backgroundColor:"green", color:"white"}}>{movie.title}</span></p>
-                            <p> Your guesses were: </p>
-                            <GuessesList guessedMovies={guessedMovies} />
+                        <div>
+                        <p className='font' style={{ color: "ghostwhite", textAlign:"center", fontSize:"20px"}}>{isCorrect ? 'Correct!' : 'Sorry you were out of guesses...'} </p>
+                        <ShowAnwser movie={movie} isCorrect={isCorrect} guessedMovies={guessedMovies}/>
+                        
                         </div>
                     )}
                     {isCorrect && <Confetti />}
                     {isSkipped && (
-                        <div className={`font ${isCorrect ? 'correct-message' : 'wrong-message'}`}>
-                        <p>The Movie is: <br /> <span style={{backgroundColor:"green", color:"white"}}>{movie.title}</span></p>
-                        </div>
+                        <ShowAnwser movie={movie} isCorrect={isCorrect} guessedMovies={guessedMovies}/>  
                     )}
                 </div>
             </form>
