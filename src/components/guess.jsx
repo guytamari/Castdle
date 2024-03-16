@@ -87,6 +87,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
         } 
         const showAnwser = () =>{
             setIsSkipped(true);
+            setIsDone(true);
         }
        
         
@@ -94,17 +95,37 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
             <form autoComplete='off' className='form-guess m-100'>
                 <p className='font' style={{ color: "ghostwhite", textAlign:"center", fontSize:"14px"}}>GUESSES LEFT: {numOfGuesses}</p>
                 <div>
-                    <button
-                        className="btn btn-primary btn-lg font text-sm btn-submit"
-                        type="button"
-                        onClick={refreshPage}
-                    >
-                        Shuffle
-                    </button>
                     <div className={`form-floating flex-grow-1 me-2 ${isDone || isSkipped ? 'hidden' : ''}`}>
                         
                             <div className="form-buttons">
-                                
+                                {/* show awnser button  */}
+                                <button type="button"
+                                    className='button'
+                                    onClick={showAnwser}>
+                                    <span>Show Awnser</span>
+                                    <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
+                                        <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
+                                    </svg>
+                                </button>
+                                {/* shuffle button */}
+                                <button type="button"
+                                    className='button'
+                                    onClick={refreshPage}>
+                                    <span>Shuffle</span>
+                                    <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
+                                        <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
+                                    </svg>
+                                </button>
+                                {/* submit button */}
+                                <button type="button"
+                                    className='button'
+                                    onClick={handleSubmit}>
+                                    <span>Submit</span>
+                                    <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
+                                        <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
+                                    </svg>
+                                </button>
+                                {/* input awnser */}
                                 <input
                                     type="text"
                                     value={query}
@@ -112,25 +133,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                                     className="form-control font"
                                     id="floatingInput form-buttons"
                                     placeholder="Think you know that movie is this? (press skip if you have no idea)"
-                                />
-                            
-                                <button
-                                    className="btn btn-primary btn-lg font text-sm btn-submit"
-                                    type="button"
-                                    onClick={handleSubmit}
-                                >
-                                    Submit
-                                </button>
-                           
-                                
-                          
-                                <button
-                                    className="btn btn-primary btn-lg font text-sm btn-submit"
-                                    type="button"
-                                    onClick={showAnwser}
-                                >
-                                    Show Anwser
-                                </button>
+                                />    
                             </div>
                         <ul className="list-group">
                             {suggestions.map(movie => (
@@ -152,14 +155,13 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                     )}
                     {(isCorrect || isWrong) && (
                         <div>
-                        <p className='font' style={{ color: "ghostwhite", textAlign:"center", fontSize:"20px"}}>{isCorrect ? 'Correct!' : 'Sorry you were out of guesses...'} </p>
-                        <ShowAnwser movie={movie} isCorrect={isCorrect} guessedMovies={guessedMovies}/>
-                        
+                            <p className='font' style={{ color: "ghostwhite", textAlign:"center", fontSize:"20px"}}>{isCorrect ? 'Correct!' : 'Sorry you were out of guesses...'} </p>  
+                            <ShowAnwser movie={movie} isCorrect={isCorrect} guessedMovies={guessedMovies} refreshPage={refreshPage} isDone={isDone} isSkipped={isSkipped}/>
                         </div>
                     )}
                     {isCorrect && <Confetti />}
                     {isSkipped && (
-                        <ShowAnwser movie={movie} isCorrect={isCorrect} guessedMovies={guessedMovies}/>  
+                        <ShowAnwser movie={movie} isCorrect={isCorrect} guessedMovies={guessedMovies} refreshPage={refreshPage} isDone={isDone} isSkipped={isSkipped}/>
                     )}
                 </div>
             </form>
