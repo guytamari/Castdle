@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GuessesList from './guessesList';
 import axios from 'axios';
 import Confetti from 'react-confetti';
 import ShowAnwser from './showanwser';
-function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
+function Guess({movie,numOfGuesses,setNumOfGuesses}) {
     
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -39,15 +39,44 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
             setSuggestions([]);
         }
     }
-    const handleInputChange = async (event) => {
+    // use debound to reduce spams on the api
+    const debounce = (func, delay) => {
+        let timeoutId;
+        return function(...args) {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(() => {
+                func.apply(this, args);
+            }, delay);
+        };
+    };
+
+    const debouncedFetchQueryUser = debounce(fetchQueryUser, 500);
+    const handleInputChange = (event) => {
         setQuery(event.target.value);
-        await fetchQueryUser(event.target.value);
+        debouncedFetchQueryUser(event.target.value);
     }
     const handleSelectedMovie = async (movie) => {
         setQuery(`${movie.title} - ${movie.release_date.substring(0,4)}`);
         setMovieUser(movie);
         setSuggestions([]);
     }
+    // handle enter keyboard press
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSubmit();
+          }
+        };
+    
+        document.addEventListener('keypress', handleKeyPress);
+    
+        return () => {
+          document.removeEventListener('keypress', handleKeyPress);
+        };
+      });
 
     /*
         randomMovieID == the correct movie id
@@ -86,6 +115,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
             window.location.reload();
         } 
         const showAnwser = () =>{
+            setNumOfGuesses(0);
             setIsSkipped(true);
             setIsDone(true);
         }
@@ -150,7 +180,7 @@ function Guess({movie,setMovie,numOfGuesses,setNumOfGuesses}) {
                     {guessedMovies.length > 0 && (
                         <div className={`guesses-history ${isDone ? 'hidden' : ''}`}>
                             <h3>Your Guesses :</h3>
-                            <GuessesList movie={movie} guessedMovies={guessedMovies} />
+                            {movie ? <GuessesList movie={movie} guessedMovies={guessedMovies} /> : null}
                         </div>
                     )}
                     {(isCorrect || isWrong) && (

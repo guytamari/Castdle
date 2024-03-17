@@ -79,6 +79,8 @@
   font-weight: 500;
   line-height: 1;
   padding: 1em 1.5em;
+  width: 50%;
+  justify-self: center;
   position: relative;
   transition: filter var(--motion-duration);
 }
@@ -253,6 +255,7 @@ line-height: 1.25rem;
   margin-right: auto;
   justify-content: center;
 }
+
 
 
 

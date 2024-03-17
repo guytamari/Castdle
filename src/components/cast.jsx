@@ -1,43 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { gettingMovies, movieDetails, fetchingActorPosterURL } from './api';
+import React, { useState } from 'react';
+import { fetchingActorPosterURL } from './api';
 
-const ANIMETED_MOVIES = 16;
 const POSTER_SIZE = "w185";
 
-function Cast({movie,setMovie, numOfGuesses, setNumOfGuesses}) { 
-    const [castOfMovie, setCastOfMovie] = useState([]);
+function Cast({numOfGuesses, castOfMovie}) { 
     const [numberOfActors] = useState(4);
-    // Filtering the movies
-    const filterMovies = (movies) => {
-        return movies.filter(movie => (
-            movie.original_language === "en" &&
-            !movie.genre_ids.includes(ANIMETED_MOVIES) &&
-            new Date(movie.release_date).getFullYear() >= 1998
-        ));
-    };
-        
-        useEffect(() => {
-            async function fetchAndFilterMovies() {
-                try {
-                    const responseTopRated = await gettingMovies("top_rated", 50);
-                    const responsePopular = await gettingMovies("popular", 30);
-                    if (responseTopRated && responsePopular) {
-                        const filteredTopRated = filterMovies(responseTopRated.results);
-                        const filteredPopular = filterMovies(responsePopular.results);
-                        const allMovies = filteredTopRated.concat(filteredPopular);
-                        const randomIndex = Math.floor(Math.random() * allMovies.length);
-                        const selectedMovie = allMovies[randomIndex];
-                        const randomMovieID = selectedMovie.id;
-                        const responseFetchMovieDetails = await movieDetails(randomMovieID);
-                        setCastOfMovie(responseFetchMovieDetails.cast);
-                        setMovie(selectedMovie);
-                    }
-                } catch (error) {
-                    console.error("Error fetching and filtering movies:", error);
-                }
-            }
-            fetchAndFilterMovies();
-        }, [setMovie]); 
+    
 
     // get actor image and idetify if it has any
     function getActorsDetails(castOfMovie, numberOfActors) {
@@ -69,16 +37,13 @@ function Cast({movie,setMovie, numOfGuesses, setNumOfGuesses}) {
                     ) : (
                         <p>no poster available</p>
                     )}
-                    {numOfGuesses <= 4 ? (
+                    {numOfGuesses <= 4 && (
                         <p>{actor.name}</p>
-                    ):(
-                        null
                     )}
-                    {numOfGuesses <= 3 ? (
+                    {numOfGuesses <= 3 && (
                         <p style={{fontSize:"12px"}}>{actor.character}</p>
-                    ):(
-                        null
                     )}
+                    
                 
                 </div>
             ))}
