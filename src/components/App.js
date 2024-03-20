@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Cast from './cast';
 import Guess from './guess';
 import Header from "./header";
+import DifficultyPopUp from './DifficultyPopUp';
 import { gettingMovies, movieDetails } from './api';
 
 
@@ -10,6 +11,11 @@ function App() {
   const [movie,setMovie] = useState([]);
   const [numOfGuesses,setNumOfGuesses] = useState(5);
   const [castOfMovie, setCastOfMovie] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [numberOfActors, setNumberOfActors] = useState(4);
+
+
 
   // Filtering the movies
   const filterMovies = (movies) => {
@@ -19,6 +25,24 @@ function App() {
         new Date(movie.release_date).getFullYear() >= 1998
     ));
 };
+
+  const onStartGame = (selectedOption) => {
+    setIsOpen(false);
+    setGameStarted(true);
+    switch(selectedOption) {
+      case 'easy':
+        setNumberOfActors(6);
+        break;
+      case 'medium':
+        setNumberOfActors(4);
+        break;
+      case 'hard':
+        setNumberOfActors(2);
+        break
+      default:
+        break
+    }
+  };
     
     useEffect(() => {
         async function fetchAndFilterMovies() {
@@ -33,7 +57,8 @@ function App() {
                     const selectedMovie = allMovies[randomIndex];
                     const randomMovieID = selectedMovie.id;
                     const responseFetchMovieDetails = await movieDetails(randomMovieID);
-                    setCastOfMovie(responseFetchMovieDetails.cast);
+                    const firstSixCastMembers = responseFetchMovieDetails.cast.slice(0, 6);
+                    setCastOfMovie(firstSixCastMembers);
                     setMovie(selectedMovie);
                 }
             } catch (error) {
@@ -45,12 +70,17 @@ function App() {
   return (
     <div>
       <header className='text-center p-2'>
-        <Header numOfGuesses={numOfGuesses}/>
+          <Header />
       </header>
-      <div>
-        <Cast numOfGuesses={numOfGuesses}  castOfMovie={castOfMovie} />
-        <Guess movie={movie} numOfGuesses={numOfGuesses} setNumOfGuesses={setNumOfGuesses} />
-      </div>
+
+    {isOpen && !gameStarted && <DifficultyPopUp onStartGame={onStartGame} />}
+
+    {!isOpen && gameStarted && (
+          <div>
+            <Cast numOfGuesses={numOfGuesses}  castOfMovie={castOfMovie} numberOfActors={numberOfActors} />
+            <Guess movie={movie} numOfGuesses={numOfGuesses} setNumOfGuesses={setNumOfGuesses} />
+          </div> 
+      )}
     </div>
     
   );

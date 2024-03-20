@@ -1,6 +1,6 @@
 import Logo from "./component-style/logo";
 
-function Header({ numOfGuesses }) {
+function Header() {
     return (
         <div className="border-bottom border-gray-500">
             <div className="container-fluid py-3">

@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
 import { fetchingActorPosterURL } from './api';
+import { useState, useEffect } from 'react';
 
 const POSTER_SIZE = "w185";
 
-function Cast({numOfGuesses, castOfMovie}) { 
-    const [numberOfActors] = useState(4);
-    
+function Cast({numOfGuesses, castOfMovie, numberOfActors}) { 
+    const [shuffledCast, setShuffledCast] = useState([]);
+
+    useEffect(() => {
+        const shuffleCast = () => {
+            const shuffled = castOfMovie.slice();
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        };
+
+        
+        setShuffledCast(shuffleCast());
+    }, [castOfMovie]);
 
     // get actor image and idetify if it has any
     function getActorsDetails(castOfMovie, numberOfActors) {
@@ -26,7 +39,7 @@ function Cast({numOfGuesses, castOfMovie}) {
     
     return (
         <div className='gridContainer'>
-            {getActorsDetails(castOfMovie, numberOfActors).map(actor => (
+            {getActorsDetails(shuffledCast, numberOfActors).map(actor => (
                 <div className='castName' key={actor.id}>
                     {actor.profile_path ? (
                         <img 
