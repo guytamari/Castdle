@@ -76,7 +76,7 @@ function App() {
     {isOpen && !gameStarted && <DifficultyPopUp onStartGame={onStartGame} />}
 
     {!isOpen && gameStarted && (
-          <div>
+          <div className='main-div'>
             <Cast numOfGuesses={numOfGuesses}  castOfMovie={castOfMovie} numberOfActors={numberOfActors} />
             <Guess movie={movie} numOfGuesses={numOfGuesses} setNumOfGuesses={setNumOfGuesses} />
           </div> 

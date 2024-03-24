@@ -1,9 +1,9 @@
 .pop_div{
     border: 3px solid black;
-    height: 250px;
-    width: 700px;
+    height: 22vh;
+    width: 55vh;
     margin: 0 auto;
-    margin-top: 20%;
+    margin-top: 10vh;
     border-radius: 20px;
     background-color: #565759;
     position: relative;
@@ -59,4 +59,34 @@
   .start-button:hover {
     background-color: #007bff;
     color: white;
+  }
+
+
+  @media screen and (max-width: 688px){
+    .pop_div{
+    border: 3px solid black;
+    height: 50vh;
+    width: 30vh;
+    margin: 0 auto;
+    margin-top: 10vh;
+    border-radius: 20px;
+    background-color: #565759;
+    position: relative;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-grid;
+      padding-top: 10%;
+      gap: 30%;
+      justify-content: center;
+      margin: 0 11vh;
+    }
+    .button_div{
+      display: flex;
+      justify-content: center;
+      padding-top: 5%;
+      margin: 20vh 0;
+    }
+
   }
