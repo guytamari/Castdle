@@ -1,4 +1,4 @@
-pipline {
+pipeline {
    agent any
    environment {
         REACT_EC2_IP = '10.0.5.17'
@@ -8,7 +8,6 @@ pipline {
 	   steps {
              script {
                 sh '''
-                echo "hello"
 		ssh ec2-user@${REACT_EC2_IP} "
                 cd Castdle
                 git pull origin main
