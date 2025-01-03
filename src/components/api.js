@@ -7,7 +7,6 @@ const apiKey = process.env.REACT_APP_API_KEY;
 // top rated = 50
 // popular = 30
 
-
 export function fetchingActorPosterURL(profilePath, posterSize) {
     return `${baseURLProfile}${posterSize}${profilePath}`;
 }
