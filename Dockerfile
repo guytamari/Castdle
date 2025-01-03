@@ -1,7 +1,7 @@
 FROM node:18-alpine
 WORKDIR /app
-COPY Castdle/package*.json ./
+COPY package*.json ./
 RUN npm install
-COPY Castdle/. .
+COPY . .
 EXPOSE 3000
 CMD ["npm","start"]
