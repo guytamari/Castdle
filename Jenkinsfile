@@ -14,7 +14,7 @@ pipeline {
                 docker build -t castdle .
 		docker stop castdle || true
 		docker rm castdle || true
-		docker run -d -p 80:3000 --restart always --name castdle castdle:latest
+		docker run -d -p 80:3000 --name castdle castdle:latest
               "
 	      '''
 		}
