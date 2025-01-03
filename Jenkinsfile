@@ -8,7 +8,8 @@ pipline {
 	   steps {
              script {
                 sh '''
-                ssh ec2-user@${REACT_EC2_IP} "
+                echo "hello"
+		ssh ec2-user@${REACT_EC2_IP} "
                 cd Castdle
                 git pull origin main
                 docker build -t castdle-image .
